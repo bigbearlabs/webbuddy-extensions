@@ -7,3 +7,5 @@ chrome.extension.onMessage.addListener (request, sender, sendResponse) ->
     request
     sender,
     sendResponse
+
+  # TODO decide how code modules will be loaded from here, given brunch concats them to app.js.

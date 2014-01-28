@@ -1,14 +1,14 @@
 exports.config =
   # See docs at http://brunch.readthedocs.org/en/latest/config.html.
   conventions:
-    assets:  /^app\/assets\//
+    assets:  /^app\/assets\/|^app\/components\//
     ignored: /^(bower_components\/bootstrap-less(-themes)?|app\/styles\/overrides|(.*?\/)?[_]\w*)/
   modules:
     definition: false
     wrapper: false
   paths:
     public: '_public'
-    watched: ['app', 'test', 'vendor', 'components']
+    watched: ['app', 'test', 'vendor', 'app/components']
   files:
     javascripts:
       joinTo:
@@ -37,14 +37,24 @@ exports.config =
       ''' # compile slim files
         ruby <<EOF
         path = 'app'
-        Dir.glob("app/**/*.slim")do |file|
-          target = file.gsub( /\.slim$/, '').gsub(%r(^app), '_public')
-          system "mkdir -p #{target.split('/')[0..-2].join('/')}"
+        Dir.glob("_public/**/*.slim") do |file|
+          target = file.gsub( /\.slim$/, '')
           system "slimrb #{file} #{target}"
         end
         EOF
+      ''',
+      ''' 
+        # hackily copy some resources from components/
+        # until we figure out how to make brunch compile without concatenation.
+        ruby <<EOF
+        Dir.glob("_public/**/*.coffee") do |coffee_src|
+          system "coffee -c #{coffee_src}"
+        end
+        EOF
+
+        rsync -av app/assets/_locales _public/  # work around the prefix ignored by brunch
       '''
-    ]
+    ] 
 
   # Enable or disable minifying of result js / css files.
   minify: true
