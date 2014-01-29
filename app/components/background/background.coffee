@@ -1,4 +1,35 @@
-listen 'chrome.tabs', -> |event|
+background_module = 
+
+  previous_content: []
+
+  content: (event)->
+    # extracting out the urls into hashable from would be vendor-specific: abstract out.
+    
+    # TODO case for chrome
+    # chrome.tabs.query
+
+  listen: (event_id, callback) ->
+    # translate our event_id to a vendor implementation.
+
+    # case: chrome
+    chrome.tabs.onUpdated.addListener (tabId, changeInfo, tab) ->
+      console.log { tabId, changeInfo, tab }
+
+    # handle messaging from extension components
+    chrome.extension.onMessage.addListener (request, sender, sendResponse) ->
+      # chrome.pageAction.show(sender.tab.id)
+      # sendResponse()
+
+      console.log
+        msg: "message received by background!"
+        request
+        sender,
+        sendResponse
+
+
+# doit.
+background_module.listen 'chrome.tabs', (event)-> 
+
   # filter for our events: new url in any of the window content.
   content = content(event)
 
@@ -12,27 +43,6 @@ listen 'chrome.tabs', -> |event|
   # let's get a snapshot so we can diff.
   @previous_content = content
 
-previous_content: []
-
-content: (event)->
-  # extracting out the urls into hashable from would be vendor-specific: abstract out.
-  # impl for chrome:
-  chrome.tabs.query
-
-listen: (event_id, callback) ->
-  # translate our event_id to a vendor implementation.
-  # TODO chrome.
-
-
-chrome.extension.onMessage.addListener (request, sender, sendResponse) ->
-  # chrome.pageAction.show(sender.tab.id)
-  # sendResponse()
-
-  console.log
-    msg: "message received by background!"
-    request
-    sender,
-    sendResponse
 
 
 
