@@ -45,6 +45,7 @@ background_module.listen 'chrome.tabs', (event)->
 
 
 
+# TODO set up dependency to angular and implement externals. $socket
 
 # TODO decide how code modules will be loaded from here, given brunch concats them to app.js.
 
