@@ -44,17 +44,17 @@ exports.config =
         EOF
       ''',
       ''' 
-        # hackily copy some resources from components/
+        # compile coffee files not compiled by brunch
         # until we figure out how to make brunch compile without concatenation.
         ruby <<EOF
         Dir.glob("_public/**/*.coffee") do |coffee_src|
-          system "coffee -c #{coffee_src}"
+          system "coffee -m -c #{coffee_src}"
         end
         EOF
 
         rsync -av app/assets/_locales _public/  # work around the prefix ignored by brunch
       '''
-    ] 
+    ]
 
   # Enable or disable minifying of result js / css files.
   minify: true

@@ -1,7 +1,5 @@
 background_module = 
 
-  previous_content: null
-
   listen: (event_id, callback) ->
     # translate our event_id to a vendor implementation.
 
@@ -9,7 +7,7 @@ background_module =
       when 'new_url'
         # case: chrome
         chrome.tabs.onUpdated.addListener (tabId, changeInfo, tab) ->
-          console.log { tabId, changeInfo, tab }
+          console.log { msg:'DEBUG', tabId, changeInfo, tab }
 
           # filter for our events: new url in any of the window content.
           if tab.status == 'loading'
@@ -33,6 +31,14 @@ background_module =
             event_params: [ request, sender, sendResponse ]
           }
 
+  post: (event)->
+    
+    console.log
+      msg: 'IMPL post to server.'
+      data: event
+
+    # TODO return thenable.
+
 
 # doit.
 background_module.listen 'new_url', (event)-> 
@@ -45,9 +51,6 @@ background_module.listen 'new_url', (event)->
 
   # TODO post to repository.
   background_module.post( event_data)
-  .then ->
-    # let's get a snapshot so we can diff.
-    @previous_content = content
 
 
 console.log 'background script loaded.'
