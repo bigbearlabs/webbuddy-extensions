@@ -1,48 +1,56 @@
 background_module = 
 
-  previous_content: []
-
-  content: (event)->
-    # extracting out the urls into hashable from would be vendor-specific: abstract out.
-    
-    # TODO case for chrome
-    # chrome.tabs.query
+  previous_content: null
 
   listen: (event_id, callback) ->
     # translate our event_id to a vendor implementation.
 
-    # case: chrome
-    chrome.tabs.onUpdated.addListener (tabId, changeInfo, tab) ->
-      console.log { tabId, changeInfo, tab }
+    switch event_id
+      when 'new_url'
+        # case: chrome
+        chrome.tabs.onUpdated.addListener (tabId, changeInfo, tab) ->
+          console.log { tabId, changeInfo, tab }
 
-    # handle messaging from extension components
-    chrome.extension.onMessage.addListener (request, sender, sendResponse) ->
-      # chrome.pageAction.show(sender.tab.id)
-      # sendResponse()
+          # filter for our events: new url in any of the window content.
+          if tab.status == 'loading'
+            callback {
+              id: event_id
+              url: tab.url
+              status: tab.status
+            }
 
-      console.log
-        msg: "message received by background!"
-        request
-        sender,
-        sendResponse
+      when 'msg'
+
+        ## handle messaging from extension components
+        # case 'chrome'
+        chrome.extension.onMessage.addListener (request, sender, sendResponse) ->
+          # e.g.
+          # chrome.pageAction.show(sender.tab.id)
+          # sendResponse()
+
+          callback {
+            id: event_id
+            event_params: [ request, sender, sendResponse ]
+          }
 
 
 # doit.
-background_module.listen 'chrome.tabs', (event)-> 
+background_module.listen 'new_url', (event)-> 
 
-  # filter for our events: new url in any of the window content.
-  content = content(event)
+  event_data =
+    msg: 'loading url'
+    window_id: 'stub-window-id'
+    url: event.url
+    status: event.status
 
-  $socket.push {
-    urls: [
-      diff_hash @previous_content, content
-    ]
-    event: event
-  }
+  # TODO post to repository.
+  background_module.post( event_data)
+  .then ->
+    # let's get a snapshot so we can diff.
+    @previous_content = content
 
-  # let's get a snapshot so we can diff.
-  @previous_content = content
 
+console.log 'background script loaded.'
 
 
 # TODO set up dependency to angular and implement externals. $socket
