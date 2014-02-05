@@ -1,0 +1,153 @@
+{
+	"id": "3858c40a-1d7f-9cc8-e801-5b172567d66d",
+	"name": "webbuddy-api",
+	"description": "",
+	"order": [
+		"a4aacd84-a8ed-f61a-a4f3-29b1110fab4f"
+	],
+	"folders": [
+		{
+			"id": "82b497ae-df5f-2649-fef1-7afd0bf2c6fd",
+			"name": "attic",
+			"description": "",
+			"order": [
+				"f75291a3-a8b8-1e53-b17e-3b327d6f6090",
+				"b585e3dd-d459-6441-3ed6-450a004f1a2f",
+				"a4aacd84-a8ed-f61a-a4f3-29b1110fab4f"
+			],
+			"collection_name": "webbuddy-api",
+			"collection_id": "3858c40a-1d7f-9cc8-e801-5b172567d66d"
+		},
+		{
+			"id": "7c1e8fec-1f07-dac8-666e-8eae6e7db025",
+			"name": "v1",
+			"description": "",
+			"order": [
+				"392c166e-119f-cc80-0169-e0ce507257e0"
+			],
+			"collection_name": "webbuddy-api",
+			"collection_id": "3858c40a-1d7f-9cc8-e801-5b172567d66d"
+		},
+		{
+			"id": "1a0ee5a3-3f06-cb4d-74bf-6e0eb5dbc3aa",
+			"name": "v2",
+			"description": "",
+			"order": [
+				"22d54e04-b53a-d6ba-2501-88406a91bdee",
+				"d0d12c9b-1df4-11e4-0bbe-29fb88619f75"
+			],
+			"collection_name": "webbuddy-api",
+			"collection_id": "3858c40a-1d7f-9cc8-e801-5b172567d66d"
+		}
+	],
+	"timestamp": 1391457437306,
+	"synced": false,
+	"requests": [
+		{
+			"id": "22d54e04-b53a-d6ba-2501-88406a91bdee",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:59124/stacks",
+			"pathVariables": {},
+			"method": "POST",
+			"data": "{\n  \"name\": \"stub chrome stack\"\n}",
+			"dataMode": "raw",
+			"name": "http://localhost:59124/stacks",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1391606481457,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"collectionId": "3858c40a-1d7f-9cc8-e801-5b172567d66d",
+			"synced": false
+		},
+		{
+			"id": "392c166e-119f-cc80-0169-e0ce507257e0",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:59124/data",
+			"pathVariables": {},
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"name": "http://localhost:59124/data",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1391607096276,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"collectionId": "3858c40a-1d7f-9cc8-e801-5b172567d66d",
+			"synced": false
+		},
+		{
+			"id": "a4aacd84-a8ed-f61a-a4f3-29b1110fab4f",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:59123/data",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": "{\n  \"name\": \"stub chrome stack\"\n}",
+			"dataMode": "raw",
+			"name": "http://localhost:59123/data",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1391532849486,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"collectionId": "3858c40a-1d7f-9cc8-e801-5b172567d66d",
+			"synced": false
+		},
+		{
+			"id": "b585e3dd-d459-6441-3ed6-450a004f1a2f",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:59124/stacks/stub%20chrome%20stack/pages",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": "{\n  \"url\": \"stub-url\",\n  \"title\": \"stub page in chrome window\"\n}",
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"time": 1391552507175,
+			"name": "http://localhost:59124/stacks/:id/pages",
+			"description": "",
+			"collectionId": "3858c40a-1d7f-9cc8-e801-5b172567d66d",
+			"responses": [],
+			"synced": false
+		},
+		{
+			"id": "d0d12c9b-1df4-11e4-0bbe-29fb88619f75",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:59124/stacks/stub%20chrome%20stack/pages",
+			"pathVariables": {},
+			"method": "POST",
+			"data": "{\n  \"url\": \"stub-url\",\n  \"title\": \"stub page in chrome window\"\n}",
+			"dataMode": "raw",
+			"name": "http://localhost:59124/stacks/stub%20chrome%20stack/pages",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1391606500941,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"collectionId": "3858c40a-1d7f-9cc8-e801-5b172567d66d",
+			"synced": false
+		},
+		{
+			"id": "f75291a3-a8b8-1e53-b17e-3b327d6f6090",
+			"headers": "Content-Type: application/json\n",
+			"url": "http://localhost:59124/stacks",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": "{\n  \"name\": \"stub chrome stack\"\n}",
+			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"time": 1391533633106,
+			"name": "http://localhost:59124/stacks",
+			"description": "",
+			"collectionId": "3858c40a-1d7f-9cc8-e801-5b172567d66d",
+			"responses": [],
+			"synced": false
+		}
+	]
+}
