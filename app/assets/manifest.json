@@ -30,11 +30,15 @@
   "permissions": [
     "history",
     "tabs",
-    "file:///*"
+    "file:///*",
+    "http://localhost/*"
   ],
   "omnibox": {
     "keyword": "extensionizr"
   }
+  // ,
+  // "content_security_policy": "script-src 'self' http://localhost 'unsafe-eval'; object-src 'self'"
+
   // ,
   // "content_scripts": [
   //   {

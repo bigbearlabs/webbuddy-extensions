@@ -34,7 +34,8 @@ exports.config =
       modules_folder: 'partials'
       locals: {}
     afterBrunch: [
-      ''' # compile slim files
+      ''' 
+        ## compile slim files
         ruby <<EOF
         path = 'app'
         Dir.glob("_public/**/*.slim") do |file|
@@ -44,7 +45,7 @@ exports.config =
         EOF
       ''',
       ''' 
-        # compile coffee files not compiled by brunch
+        ## compile coffee files not compiled by brunch
         # until we figure out how to make brunch compile without concatenation.
         ruby <<EOF
         Dir.glob("_public/**/*.coffee") do |coffee_src|
@@ -53,6 +54,11 @@ exports.config =
         EOF
 
         rsync -av app/assets/_locales _public/  # work around the prefix ignored by brunch
+      ''',
+      '''
+        ## reload using Extension Reloader
+        open -a 'google chrome canary' http://reload.extensions
+        open -a 'google chrome canary' chrome-extension://capgjkioeanbjlbjjlkchildbfgchodl/_generated_background_page.html
       '''
     ]
 

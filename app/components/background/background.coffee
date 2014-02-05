@@ -34,23 +34,38 @@ background_module =
   post: (event)->
     
     console.log
-      msg: 'IMPL post to server.'
+      msg: 'posting to server.'
       data: event
 
-    # TODO return thenable.
+    xhreq = new XMLHttpRequest()
+    xhreq.open "POST", "http://localhost:59124/stacks/#{event.window_id}/pages"
+    xhreq.onreadystatechange = ->
+      return unless xhreq.readyState is 4
+      response = xhreq.responseText
+      console.log response
+
+    xhreq.send JSON.stringify event
 
 
-# doit.
+## doit
+
+# listen for scope changes from ui and update recording scope.
+# TODO
+
+# listen for new window and use default strategy to add it to scope (or not).
+# TODO filter new url's for windows in scope.
+
+# listen for new urls and post if in scope.
 background_module.listen 'new_url', (event)-> 
 
   event_data =
     msg: 'loading url'
-    window_id: 'stub-window-id'
+    window_id: 'stub chrome window'
     url: event.url
     status: event.status
 
   # TODO post to repository.
-  background_module.post( event_data)
+  background_module.post(event_data)
 
 
 console.log 'background script loaded.'
