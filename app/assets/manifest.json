@@ -1,11 +1,11 @@
 // ## chrome extension manifest.
 
 {
-  "name": "CHANGE THIS : Extension boilerplate",
+  "name": "Researches Chrome Extension",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "This extension was created with the awesome extensionizr.io",
-  "homepage_url": "http://bigbearlabs.com/research",
+  "description": "Imports your Chrome research into Researches",
+  "homepage_url": "http://bigbearlabs.com/researches",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
@@ -34,7 +34,7 @@
     "<all_urls>"
   ],
   "omnibox": {
-    "keyword": "extensionizr"
+    "keyword": "research"
   }
   // ,
   // "content_security_policy": "script-src 'self' http://localhost 'unsafe-eval'; object-src 'self'"
