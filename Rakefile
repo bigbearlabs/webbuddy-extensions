@@ -1,6 +1,6 @@
 task :default => :loop
 
-task :release => [ :build, :assemble, :stage ]
+task :release => [ :build, :assemble, :zip ]
 
 task :heroku => [ :build, :assemble, :'stage:heroku' ]
 
@@ -44,11 +44,29 @@ task :'stage:heroku' do
     cd ../bbl-rails
     echo "## commit"
     git add -A public/webbuddy-extensions
-    git ci -a -m "updating webbuddy-extensions, #{Date.new.to_s}"
+    git ci -a -m "updating webbuddy-extensions, #{Time.new.to_s}"
     git push heroku
     echo "## pushed to heroku"
   )
 end
+
+desc "zip extension"
+task :zip => [] do
+  releases_root = 'dist'
+  zip_name = "webbuddy-extension-chrome.#{Time.new.to_i}.zip"
+  target_dir = "_public"
+
+  sh %Q(
+    (
+      cd #{target_dir}
+      grep -v // manifest.json > manifest.json.scrubbed # remove comments from json
+      mv manifest.json.scrubbed manifest.json
+      zip -r #{zip_name} .
+    )
+    mv "#{target_dir}/#{zip_name}" #{releases_root}
+  )
+end
+
 
 desc "clean"
 task :clean do
