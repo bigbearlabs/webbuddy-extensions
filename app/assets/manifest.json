@@ -30,8 +30,8 @@
   "permissions": [
     "history",
     "tabs",
-    "file:///*",
-    "http://localhost/*"
+
+    "<all_urls>"
   ],
   "omnibox": {
     "keyword": "extensionizr"

@@ -1,21 +1,23 @@
 background_module = 
 
-  listen: (event_id, callback) ->
+  listen: (event_id, callback) =>
     # translate our event_id to a vendor implementation.
 
     switch event_id
       when 'new_url'
         # case: chrome
-        chrome.tabs.onUpdated.addListener (tabId, changeInfo, tab) ->
+        chrome.tabs.onUpdated.addListener (tabId, changeInfo, tab) =>
           console.log { msg:'DEBUG', tabId, changeInfo, tab }
 
           # filter for our events: new url in any of the window content.
-          if tab.status == 'loading'
-            callback {
-              id: event_id
-              url: tab.url
-              status: tab.status
-            }
+          if tab.status == 'loading' or tab.status == 'complete'
+            chrome.tabs.captureVisibleTab tab.windowId, {format: 'png'}, (thumbnail_data_url)=>
+              callback {
+                id: event_id
+                url: tab.url
+                status: tab.status
+                thumbnail_data: thumbnail_data_url
+              }
 
       when 'msg'
 
@@ -59,10 +61,10 @@ background_module =
 background_module.listen 'new_url', (event)-> 
 
   event_data =
-    msg: 'loading url'
     window_id: 'stub chrome window'
     url: event.url
     status: event.status
+    thumbnail_data: event.thumbnail_data
 
   # TODO post to repository.
   background_module.post(event_data)
