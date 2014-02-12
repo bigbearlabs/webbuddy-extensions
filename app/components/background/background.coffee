@@ -1,4 +1,5 @@
 background_module = 
+  stack_requests: {}
 
   listen: (event_id, callback) =>
     # translate our event_id to a vendor implementation.
@@ -33,10 +34,23 @@ background_module =
             event_params: [ request, sender, sendResponse ]
           }
 
-  post: (event)->
-    
+  post_stack: (event)->
     console.log
-      msg: 'posting to server.'
+      msg: 'posting stack to server.'
+      data: event
+      
+    xhreq = new XMLHttpRequest()
+    xhreq.open "POST", "http://localhost:59124/stacks"
+    xhreq.onreadystatechange = ->
+      return unless xhreq.readyState is 4
+      response = xhreq.responseText
+      console.log response
+
+    xhreq.send JSON.stringify event
+
+  post_page: (event)->
+    console.log
+      msg: 'posting page to server.'
       data: event
 
     xhreq = new XMLHttpRequest()
@@ -58,16 +72,26 @@ background_module =
 # TODO filter new url's for windows in scope.
 
 # listen for new urls and post if in scope.
-background_module.listen 'new_url', (event)-> 
+background_module.listen 'new_url', (event)=> 
+
+  window_id = 'stub chrome window'
+
+  # once-only stack creation.
+  unless background_module.stack_requests[window_id]
+    background_module.post_stack
+      name: window_id
+      window_id: window_id
+
+    background_module.stack_requests[window_id] = window_id
 
   event_data =
-    window_id: 'stub chrome window'
+    window_id: window_id
     url: event.url
     status: event.status
     thumbnail_data: event.thumbnail_data
 
   # TODO post to repository.
-  background_module.post(event_data)
+  background_module.post_page(event_data)
 
 
 console.log 'background script loaded.'
