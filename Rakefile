@@ -16,7 +16,7 @@ task :build do
   sh %(
     npm install
     bower install
-    brunch build --production  # will build to _public
+    brunch build --production  # will build to build/
   )
 end
 
@@ -24,9 +24,9 @@ desc "assemble"
 task :assemble do
   sh %(
     # ## ship static/, app/data, .tmp/scripts/injectees
-    # rsync -av static/* _public/
+    # rsync -av static/* build/
     # ## assume bbl-middleman is built, ship intro.
-    # rsync -av ../bbl-middleman/build/webbuddy/intro _public/
+    # rsync -av ../bbl-middleman/build/webbuddy/intro build/
   )
 end
 
@@ -40,7 +40,7 @@ desc "deploy to bbl-rails on heroku"
 task :'stage:heroku' do
   sh %(
     echo "## copy to webbuddy-extensions"
-    rsync -av --delete --no-implied-dirs _public/* ../bbl-rails/public/webbuddy-extensions/
+    rsync -av --delete --no-implied-dirs build/* ../bbl-rails/public/webbuddy-extensions/
     cd ../bbl-rails
     echo "## commit"
     git add -A public/webbuddy-extensions
@@ -54,7 +54,7 @@ desc "zip extension"
 task :zip => [] do
   releases_root = 'dist'
   zip_name = "webbuddy-extension-chrome.#{Time.new.to_i}.zip"
-  target_dir = "_public"
+  target_dir = "build"
 
   sh %Q(
     (
@@ -71,7 +71,7 @@ end
 desc "clean"
 task :clean do
   sh %(
-    rm -rf _public
+    rm -rf build/
   )
 end
 

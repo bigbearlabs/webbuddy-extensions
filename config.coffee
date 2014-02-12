@@ -64,3 +64,9 @@ exports.config =
 
   # Enable or disable minifying of result js / css files.
   minify: true
+
+  overrides:
+    production:
+      paths:
+        public: 'build'
+        
